@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "fraunces",
+        "createdAt": "2026-11-26T05:06:10.483Z",
+        "reason": "Brand face: Fraunces is the text face in the architect's own benchmark file (zelka-benchmark-v2.html) supplied with the brief; not yet confirmed by the user in words"
+      }
+    ]
+  }
+}
