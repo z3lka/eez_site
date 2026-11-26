@@ -38,7 +38,7 @@
   }
   function unmount() {
     clearTimeout(liveTimer); hold.innerHTML = ''; mounted = false;
-    frame.classList.remove('live'); snd.hidden = false;
+    frame.classList.remove('live'); frame.classList.remove('blocked'); snd.hidden = false; play.textContent = 'Play film';
   }
   function mount(sound) {
     if (!shown) return;
@@ -46,7 +46,15 @@
     var f = document.createElement('iframe');
     f.src = src(shown, sound); f.title = shown.getAttribute('data-title');
     f.allow = 'autoplay; fullscreen; picture-in-picture'; f.referrerPolicy = 'strict-origin-when-cross-origin'; f.setAttribute('allowfullscreen', '');
-    f.addEventListener('load', function () { liveTimer = setTimeout(function () { frame.classList.add('live'); }, 900); });
+    var vimeo = shown.getAttribute('data-video').indexOf('vimeo') === 0;
+    f.addEventListener('load', function () {
+      if (!vimeo) { liveTimer = setTimeout(function () { frame.classList.add('live'); }, 900); return; }
+      /* Vimeo's player answers a ping; a network that blocks Vimeo serves a page that never does.
+         Without an answer the still stays up and a button offers to try anyway. */
+      try { f.contentWindow.postMessage(JSON.stringify({ method: 'ping' }), 'https://player.vimeo.com'); f.contentWindow.postMessage({ method: 'ping' }, 'https://player.vimeo.com'); } catch (e) {}
+      liveTimer = setTimeout(function () { if (!frame.classList.contains('live')) { frame.classList.add('blocked'); play.textContent = 'Film did not load here. Try anyway'; play.hidden = false; } }, 5000);
+    });
+    frame.classList.remove('blocked');
     hold.innerHTML = ''; hold.appendChild(f); mounted = true; play.hidden = true;
     if (sound) snd.hidden = true;
   }
@@ -100,7 +108,14 @@
   function onScroll() { measure(); kick(); }
 
   snd.addEventListener('click', function () { mount(true); });
-  play.addEventListener('click', function () { mount(true); });
+  play.addEventListener('click', function () {
+    if (frame.classList.contains('blocked')) { clearTimeout(liveTimer); frame.classList.remove('blocked'); frame.classList.add('live'); play.hidden = true; return; }
+    mount(true);
+  });
+  window.addEventListener('message', function (e) {
+    if (e.origin !== 'https://player.vimeo.com' || !mounted) return;
+    clearTimeout(liveTimer); frame.classList.remove('blocked'); frame.classList.add('live'); play.hidden = true;
+  });
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', function () { layout(); onScroll(); });
   document.addEventListener('toggle', function () { onScroll(); }, true);   /* opening a story moves everything */
