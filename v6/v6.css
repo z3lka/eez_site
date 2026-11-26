@@ -1,0 +1,65 @@
+/* v6, Films. The blueprint (v5) with each project's role, a story that opens
+   on request, and a film frame that closes in the drawing when a project has
+   a film. Loads after ../v5/v5.css. */
+
+/* the drawing steps back while a film frame is closed */
+.stage canvas { opacity: calc(1 - var(--reel, 0) * 0.9); }
+.hud-place { opacity: calc(1 - var(--reel, 0)); }
+
+/* ── her role, set like a line in a title block ── */
+.role { margin-top: 14px; border: 1px solid var(--ink); max-width: 62ch; padding: 9px 12px; }
+.role div { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 12px; align-items: center; }
+.role dt { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink3); }
+.role dd { padding-left: 12px; border-left: 1px solid var(--ink); font-family: var(--grot); font-weight: 600; font-size: 15px; line-height: 1.3; }
+
+/* ── link to the film, always there even if the frame never plays ── */
+.watch { margin-top: 14px; font-size: 13px; display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; }
+.watch a { color: var(--red); text-decoration-color: currentColor; }
+.watch a::before { content: '▶ '; font-size: 0.8em; }
+.watch span { color: var(--ink3); font-size: 12px; }
+
+/* ── story and pictures, closed until asked for ── */
+.more { margin-top: 18px; }
+.more summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; padding: 9px 14px 9px 12px; border: 1px solid var(--ink); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; transition: background-color 160ms ease, color 160ms ease; }
+.more summary::-webkit-details-marker { display: none; }
+.more summary::before { content: '+'; font-family: var(--mono); font-size: 16px; line-height: 1; width: 0.7em; }
+.more[open] summary::before { content: '−'; }
+.more[open] summary span::after { content: ' (close)'; color: var(--ink3); }
+@media (hover: hover) { .more summary:hover { background: var(--ink); color: var(--paper); } }
+.more summary:active { transform: scale(0.98); }
+.more > p { max-width: 60ch; margin-top: 1em; text-wrap: pretty; }
+.more > :first-of-type { margin-top: 18px; }
+.more[open] > :not(summary) { animation: unfold 380ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+@keyframes unfold { from { opacity: 0; transform: translateY(6px); } }
+
+/* ── the film frame, laid over the drawing ── */
+.reel { position: fixed; z-index: 22; pointer-events: none; --a: 0; overflow: hidden; }
+.reel.on { pointer-events: auto; }
+.rl { position: absolute; background: var(--ink); opacity: min(1, var(--a) * 4); }
+.rl-t, .rl-b { left: 0; right: 0; height: 1px; }
+.rl-l, .rl-r { top: 0; bottom: 0; width: 1px; }
+.rl-t { top: var(--fy); transform: translateY(calc((var(--a) - 1) * var(--fy))); }
+.rl-b { top: calc(var(--fy) + var(--fh)); transform: translateY(calc((1 - var(--a)) * var(--gb))); }
+.rl-l { left: var(--fx); transform: translateX(calc((var(--a) - 1) * var(--fx))); }
+.rl-r { left: calc(var(--fx) + var(--fw)); transform: translateX(calc((1 - var(--a)) * var(--gr))); }
+/* construction diagonals appear as the lines arrive, then the still prints over them */
+.rx { position: absolute; left: var(--fx); top: var(--fy); width: var(--fw); height: var(--fh); opacity: calc((var(--a) - 0.45) * 3); }
+.rx-1 { background: linear-gradient(to top right, transparent calc(50% - 0.6px), var(--tone2) 50%, transparent calc(50% + 0.6px)); }
+.rx-2 { background: linear-gradient(to bottom right, transparent calc(50% - 0.6px), var(--tone2) 50%, transparent calc(50% + 0.6px)); }
+.frame { position: absolute; left: var(--fx); top: var(--fy); width: var(--fw); height: var(--fh); background: var(--paper-deep); isolation: isolate; opacity: calc((var(--a) - 0.72) * 4); overflow: hidden; }
+.frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.2) brightness(1.1); mix-blend-mode: screen; transition: opacity 700ms ease; }
+.frame .hold, .frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.frame .hold { opacity: 0; transition: opacity 700ms ease; }
+.frame.live .hold { opacity: 1; }
+.frame.live img { opacity: 0; }
+.play { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 12px 18px; border: 1px solid var(--ink); background: var(--paper); color: var(--ink); font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; }
+.rcap { position: absolute; left: var(--fx); top: calc(var(--fy) + var(--fh) + 10px); width: var(--fw); display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; font-family: var(--mono); font-size: 12px; line-height: 1.4; color: var(--ink2); opacity: calc((var(--a) - 0.85) * 7); }
+.rt { flex: 1 1 14em; min-width: 0; }
+.rcap button, .rcap a { font: inherit; color: var(--red); text-transform: uppercase; letter-spacing: 0.06em; text-decoration: underline; text-underline-offset: 0.2em; padding: 4px 0; }
+.rcap a::after { content: ' ↗'; }
+
+@media (max-width: 900px) {
+  .rcap { font-size: 11px; top: calc(var(--fy) + var(--fh) + 6px); }
+  .rt { flex-basis: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .role div { grid-template-columns: 4.8rem minmax(0, 1fr); gap: 8px; }
+}

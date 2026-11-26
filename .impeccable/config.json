@@ -62,6 +62,15 @@
         ],
         "createdAt": "2026-11-26T21:14:14.575Z",
         "reason": "User asked for a blueprint drawing grid as the v5 design language"
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "v6/index.html"
+        ],
+        "createdAt": "2026-11-26T22:13:52.469Z",
+        "reason": "Blueprint drawing grid requested by the user, carried over from v5"
       }
     ]
   }
