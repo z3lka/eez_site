@@ -8,6 +8,42 @@
         "value": "fraunces",
         "createdAt": "2026-11-26T05:06:10.483Z",
         "reason": "Brand face: Fraunces is the text face in the architect's own benchmark file (zelka-benchmark-v2.html) supplied with the brief; not yet confirmed by the user in words"
+      },
+      {
+        "rule": "undersized-ui-text",
+        "value": "*",
+        "files": [
+          "v2/index.html"
+        ],
+        "createdAt": "2026-11-26T14:52:23.836Z",
+        "reason": "False positive: 'across Scales' is 0.52em of a 56-230px title (about 30px minimum), measured in screenshots; detector read the em as px"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "v2/index.html"
+        ],
+        "createdAt": "2026-11-26T14:52:23.848Z",
+        "reason": "Author line on the title page comes from the architect's own benchmark file (zelka-benchmark-v2.html) supplied with the brief; v2 reproduces it. Not confirmed by the user in words"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "v2/index.html"
+        ],
+        "createdAt": "2026-11-26T14:52:32.149Z",
+        "reason": "Brand paper #F4F1EA is fixed by the architect's benchmark file and PRODUCT.md; not confirmed by the user in words"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "v3/index.html"
+        ],
+        "createdAt": "2026-11-26T14:52:32.160Z",
+        "reason": "Brand paper #F4F1EA is fixed by the architect's benchmark file and PRODUCT.md; not confirmed by the user in words"
       }
     ]
   }

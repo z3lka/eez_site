@@ -19,23 +19,25 @@
 <body>
 <a class="skip" href="#main">Skip to the work</a>
 
-<main id="main">
-
-<!-- ═══ Sheet 1: the drawing ═══ -->
-<section class="sheet hero" id="top">
-  <nav class="bar" aria-label="Main">
-    <a class="mark" href="#top" aria-current="page">Zelka</a>
+<header class="bar">
+  <a class="mark" href="#top">Zelka</a>
+  <nav aria-label="Main">
     <ul>
       <li><a href="#work">Work</a></li>
       <li><a href="#observe">95 cm</a></li>
       <li><a href="#method">Method</a></li>
       <li><a href="#direct">Tree of Life</a></li>
     </ul>
-    <a class="btn btn-sm" href="#contact">Write to Elif</a>
   </nav>
+  <a class="btn btn-sm" href="#contact">Write to Elif</a>
+</header>
 
+<main id="main">
+
+<!-- ═══ Sheet 1: the drawing ═══ -->
+<section class="sheet hero" id="top">
   <div class="title">
-    <h1>Elif Ebrar Zelka, architect</h1>
+    <h1><span class="w" style="--i:0"><span>Elif</span></span> <span class="w" style="--i:1"><span>Ebrar</span></span> <span class="w" style="--i:2"><span>Zelka,</span></span> <span class="w" style="--i:3"><span>architect</span></span></h1>
     <div class="lede">
       <p>Based in Split. A city, a building, a room, an object and a screen are one problem at different magnifications.</p>
       <a class="btn" href="#work">See the work</a>
@@ -60,6 +62,26 @@
     <h2>One problem, five scales</h2>
     <p class="note">I have never experienced a city, a building, a room, an object and a screen as separate disciplines. This publication documents one method through its evidence.</p>
   </div>
+  <div class="scalebox" id="scalebox">
+    <fieldset class="scale-pick">
+      <legend class="vh">Choose the scale of the drawing</legend>
+      <label><input type="radio" name="sc" value="10000" checked><span><span class="sc-n">City</span><span class="sc-r">1 : 10 000</span></span></label>
+      <label><input type="radio" name="sc" value="1000"><span><span class="sc-n">Building</span><span class="sc-r">1 : 1000</span></span></label>
+      <label><input type="radio" name="sc" value="100"><span><span class="sc-n">Room</span><span class="sc-r">1 : 100</span></span></label>
+      <label><input type="radio" name="sc" value="10"><span><span class="sc-n">Object</span><span class="sc-r">1 : 10</span></span></label>
+      <label><input type="radio" name="sc" value="1"><span><span class="sc-n">Screen</span><span class="sc-r">1 : 1</span></span></label>
+    </fieldset>
+    <figure class="scale-stage">
+      <figcaption id="scale-read" aria-live="polite">At 1 : 10 000 a three year old is a third of a pixel tall. The drawing cannot see her.</figcaption>
+      <div class="scale-view">
+        <canvas id="scale-canvas" role="img" aria-label="An elevation of a square that zooms between five drawing scales. A three year old, drawn in red and 95 centimetres tall, stands beside an adult, a bench and a planter. At the scale of the city she is too small to draw. At full size she is taller than the sheet."></canvas>
+        <div class="sbar" aria-hidden="true">
+          <div class="sbar-blocks"><i></i><i></i><i></i><i></i><i></i></div>
+          <p id="sbar-text">500 m at 1 : 10 000</p>
+        </div>
+      </div>
+    </figure>
+  </div>
   <div class="intro-low">
     <dl class="facts">
       <div><dt>Seven</dt><dd>years of projects</dd></div>
@@ -83,14 +105,14 @@
   <div class="index">
     <ul class="rows">
       <li class="row is-on">
-        <button type="button" aria-pressed="true"><span class="row-t">Zümrütevler Square</span><span class="row-m">Istanbul, Maltepe · tactical urbanism · 2019 to 2020</span></button>
+        <button type="button" aria-pressed="true"><span class="row-t">Zümrütevler Square</span><span class="row-m">City · Istanbul, Maltepe · tactical urbanism · 2019 to 2020</span></button>
         <figure class="plate">
           <svg viewBox="0 0 440 340" role="img" aria-label="Scale drawing: an adult beside a three year old child, the child dimensioned at 95 centimetres"><rect width="440" height="340" fill="var(--paper)"/><line x1="40" y1="280" x2="400" y2="280" stroke="var(--ink)" stroke-width="3"/><circle cx="170" cy="92" r="15" fill="var(--ink)"/><polygon points="147,116 193,116 182,280 158,280" fill="var(--ink)"/><circle cx="250" cy="188" r="9" fill="var(--red)"/><polygon points="237,202 263,202 257,280 243,280" fill="var(--red)"/><g stroke="var(--red)" stroke-width="1.5"><line x1="290" y1="179" x2="290" y2="280"/><line x1="283" y1="179" x2="297" y2="179"/><line x1="283" y1="280" x2="297" y2="280"/></g><text x="304" y="236" font-family="var(--mono)" font-size="15" fill="var(--red)">95 cm</text></svg>
           <figcaption>A public square redrawn from the height of a three year old. With Superpool and NACTO GDCI.</figcaption>
         </figure>
       </li>
       <li class="row">
-        <button type="button" aria-pressed="false"><span class="row-t">Intersect</span><span class="row-m">Sulukule, Istanbul land walls · city scale research</span></button>
+        <button type="button" aria-pressed="false"><span class="row-t">Intersect</span><span class="row-m">City · Sulukule, Istanbul land walls · research</span></button>
         <figure class="plate">
                   <svg role="img" aria-label="Four panel notation drawing with red movement traces" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
           <rect width="400" height="400" fill="var(--paper-deep)"/>
@@ -126,7 +148,7 @@
         </figure>
       </li>
       <li class="row">
-        <button type="button" aria-pressed="false"><span class="row-t">Housing in Hamam</span><span class="row-m">Finike · housing · 2020</span></button>
+        <button type="button" aria-pressed="false"><span class="row-t">Housing in Hamam</span><span class="row-m">Building · Finike · housing · 2020</span></button>
         <figure class="plate">
               <svg role="img" aria-label="Topographic drawing of Finike with buildings and a red section line" viewBox="0 0 460 620" fill="none" xmlns="http://www.w3.org/2000/svg">
       <!-- Finike topographic fragment -->
@@ -185,7 +207,7 @@
         </figure>
       </li>
       <li class="row">
-        <button type="button" aria-pressed="false"><span class="row-t">Tree of Life</span><span class="row-m">Istanbul · immersive installation · 2021 to 2022</span></button>
+        <button type="button" aria-pressed="false"><span class="row-t">Tree of Life</span><span class="row-m">Room · Istanbul · immersive installation · 2021 to 2022</span></button>
         <figure class="plate plate-dark">
               <svg aria-hidden="true" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
       <rect width="1200" height="800" fill="var(--dark)"/>
@@ -220,15 +242,15 @@
         </figure>
       </li>
       <li class="row">
-        <button type="button" aria-pressed="false"><span class="row-t">Hologram Projects</span><span class="row-m">Immersive, technical</span></button>
+        <button type="button" aria-pressed="false"><span class="row-t">Hologram Projects</span><span class="row-m">Object · immersive, technical</span></button>
         <figure class="plate plate-word"><p>Hologram</p><figcaption>Technical register, Illusionist Digital Arts Studio, Istanbul.</figcaption></figure>
       </li>
       <li class="row">
-        <button type="button" aria-pressed="false"><span class="row-t">Motion Capture</span><span class="row-m">Immersive, technical</span></button>
+        <button type="button" aria-pressed="false"><span class="row-t">Motion Capture</span><span class="row-m">Screen · immersive, technical</span></button>
         <figure class="plate plate-word"><p>Motion</p><figcaption>Technical register, Illusionist Digital Arts Studio, Istanbul.</figcaption></figure>
       </li>
       <li class="row">
-        <button type="button" aria-pressed="false"><span class="row-t">Konya Islamic Solidarity Games</span><span class="row-m">Event, digital content</span></button>
+        <button type="button" aria-pressed="false"><span class="row-t">Konya Islamic Solidarity Games</span><span class="row-m">Screen · event, digital content</span></button>
         <figure class="plate plate-word"><p>Konya</p><figcaption>Digital content for the games. Technical register.</figcaption></figure>
       </li>
     </ul>
@@ -237,17 +259,23 @@
 </section>
 
 <!-- ═══ Sheet 4: 95 cm ═══ -->
-<section class="sheet observe" id="observe" data-rv>
+<section class="sheet observe" id="observe">
   <div class="measure">
-    <h2><span class="num">95</span> centimetres</h2>
-    <p class="measure-note">The height of a three year old.</p>
-    <svg class="rule" width="12" height="95" viewBox="0 0 12 95" aria-hidden="true"><line x1="6" y1="0" x2="6" y2="95" stroke="var(--red)" stroke-width="2"/><line x1="0" y1="1" x2="12" y2="1" stroke="var(--red)" stroke-width="2"/><line x1="0" y1="94" x2="12" y2="94" stroke="var(--red)" stroke-width="2"/></svg>
+    <h2 aria-label="95 centimetres"><span class="num" id="cm" aria-hidden="true">95</span> <span aria-hidden="true">centimetres</span></h2>
+    <p class="measure-note">The height of a three year old, and the length of this sheet.</p>
   </div>
+  <div class="rule95" id="rule95" aria-hidden="true"></div>
   <div class="evidence">
-    <h3>Zümrütevler Square, Istanbul Maltepe</h3>
-    <p>If you could redesign a public square from a height of 95 centimetres, you would notice different things. Broken pavements become barriers. Traffic becomes a wall of noise. A bench is unreachable. A planter is a horizon.</p>
-    <p>The team used tactical urbanism (paint, planters, flexible furniture) to test interim changes before justifying permanent reconstruction. Cheap. Fast. Measurable.</p>
-    <figure class="doc">
+    <div data-ri>
+      <h3>Zümrütevler Square, Istanbul Maltepe</h3>
+      <p>This sheet is drawn at 1 : 1. From here to the ground line is 95 centimetres, one three year old. If you could redesign a public square from that height, you would notice different things.</p>
+    </div>
+    <p class="seen" data-ri>Broken pavements become barriers.</p>
+    <p class="seen" data-ri>Traffic becomes a wall of noise.</p>
+    <p class="seen" data-ri>A bench is unreachable.</p>
+    <p class="seen" data-ri>A planter is a horizon.</p>
+    <p data-ri>The team used tactical urbanism (paint, planters, flexible furniture) to test interim changes before justifying permanent reconstruction. Cheap. Fast. Measurable.</p>
+    <figure class="doc" data-ri>
             <svg role="img" aria-label="Scanned pedestrian count sheet with one total circled in red" viewBox="0 0 440 340" xmlns="http://www.w3.org/2000/svg">
         <rect width="440" height="340" fill="var(--paper-deep)"/>
         <text x="18" y="24" font-family="var(--mono)" font-size="8.5" fill="var(--ink)" font-weight="500" letter-spacing="0.1em">PEDESTRIAN COUNTS : SIDEWALK</text>
@@ -285,14 +313,17 @@
       </svg>
       <figcaption>Pedestrian counts, baseline. Scanned field document. The red mark circles 136 pedestrians in a single count.</figcaption>
     </figure>
-    <p class="statement">After the intervention the square was no longer a transit corridor. It had become a destination.</p>
-    <dl class="data">
-      <div><dt>72%</dt><dd>increase in time spent in the square</dd></div>
-      <div><dt>×3.5</dt><dd>more toddlers present independently</dd></div>
-      <div><dt>−43%</dt><dd>fewer people reporting feeling unsafe</dd></div>
-    </dl>
-    <p class="source">Measured impact, baseline against endline. Superpool and NACTO GDCI, 2019 to 2020.</p>
+    <p class="statement" data-ri>After the intervention the square was no longer a transit corridor. It had become a destination.</p>
+    <div data-ri>
+      <dl class="data">
+        <div><dt data-count>72%</dt><dd>increase in time spent in the square</dd></div>
+        <div><dt data-count>×3.5</dt><dd>more toddlers present independently</dd></div>
+        <div><dt data-count>−43%</dt><dd>fewer people reporting feeling unsafe</dd></div>
+      </dl>
+      <p class="source">Measured impact, baseline against endline. Superpool and NACTO GDCI, 2019 to 2020.</p>
+    </div>
   </div>
+  <p class="ground">The ground. You have scrolled the full height of a three year old.</p>
 </section>
 
 <!-- ═══ Sheet 5: sites ═══ -->
@@ -334,8 +365,9 @@
       <p class="statement">The client said: “I want a tree that feels alive.” That sentence was the entire brief. Everything else had to be directed.</p>
       <p>Seven iterations. Each one removed something. The final version was quieter, slower and more alive than the first. The client had asked for spectacle. What they received was presence. They approved it in silence.</p>
     </div>
-    <figure class="tree">
-          <svg aria-hidden="true" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <figure class="tree" id="tree">
+      <canvas id="tree-canvas" role="img" aria-label="A tree made of points of light. Dragging the control steps through the seven iterations of the project: each one has fewer particles and breathes more slowly than the last."></canvas>
+          <svg class="tree-still" aria-hidden="true" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
       <rect width="1200" height="800" fill="var(--dark)"/>
       <!-- trunk: barely visible -->
       <g stroke="rgba(232,228,218,0.06)" stroke-width="1.2" fill="none">
@@ -364,6 +396,11 @@
       <!-- projection cone: very faint red -->
       <g stroke="rgba(179,52,31,0.08)" stroke-width="0.5"><path d="M600 0 L250 800"/><path d="M600 0 L950 800"/></g>
     </svg>
+      <div class="iter">
+        <label for="iter">Iteration <output id="iter-n" for="iter">7</output> of 7</label>
+        <input id="iter" type="range" min="1" max="7" step="1" value="7">
+        <p id="iter-note" aria-live="polite">Review 7. Leaf particles reduced by 40%. Let it breathe.</p>
+      </div>
     </figure>
   </div>
   <div class="briefs">
@@ -378,7 +415,12 @@
       <p class="meta">Iteration 7. Delivered to the CGI team.</p>
     </article>
     <article class="brief">
-      <h3>Note to the CGI team</h3>
+      <h3>Note to the CGI team, review 4</h3>
+      <p>“The trunk needs weight. Right now it floats. There is mass at the base of a real oak. Add 30% more branch thickness below the first fork.”</p>
+      <p class="meta">Review 4. Internal note.</p>
+    </article>
+    <article class="brief">
+      <h3>Note to the CGI team, review 7</h3>
       <p>“The tree is suffocating. Reduce leaf particles by 40%. Let it breathe. Every particle that remains must earn its place.”</p>
       <p class="meta">Review 7. Final adjustment before delivery.</p>
     </article>
@@ -416,8 +458,8 @@
 </main>
 
 <!-- ═══ The back of the sheet ═══ -->
-<footer class="back">
-  <p class="back-name" aria-hidden="true">Zelka</p>
+<footer class="back" data-rv>
+  <p class="back-name" aria-hidden="true"><span>Z</span><span>e</span><span>l</span><span>k</span><span>a</span></p>
   <div class="back-cols">
     <div>
       <p class="back-sign">Works across scales</p>
@@ -435,6 +477,8 @@
 </footer>
 
 <script src="hero.js"></script>
+<script src="scale.js"></script>
+<script src="tree.js"></script>
 <script src="main.js"></script>
 </body>
 </html>

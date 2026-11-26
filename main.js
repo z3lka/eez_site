@@ -16,6 +16,77 @@
     sections.forEach(function (s) { io.observe(s); });
   } else sections.forEach(function (s) { s.classList.add('in'); });
 
+  /* Parts that arrive on their own: the blocks down the 95 cm sheet, every photograph. */
+  var items = [].slice.call(document.querySelectorAll('[data-ri], .photo'));
+  if ('IntersectionObserver' in window) {
+    var io2 = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('in', 'seen-it'); io2.unobserve(e.target);
+        [].forEach.call(e.target.querySelectorAll('[data-count]'), count);
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+    items.forEach(function (el) { io2.observe(el); });
+  } else items.forEach(function (el) { el.classList.add('in', 'seen-it'); });
+  [].forEach.call(document.querySelectorAll('.row'), function (r, i) { r.style.setProperty('--i', i); });
+  [].forEach.call(document.querySelectorAll('.back-name span'), function (l, i) { l.style.setProperty('--i', i); });
+
+  /* A measured figure counts up to its value, once. */
+  function count(el) {
+    var m = /^(\D*)([\d.]+)(\D*)$/.exec(el.textContent.trim());
+    if (!m || reduce) return;
+    var end = parseFloat(m[2]), dec = (m[2].split('.')[1] || '').length, t0 = performance.now(), final = el.textContent;
+    (function step(now) {
+      var k = Math.min(1, (now - t0) / 1100), e = 1 - Math.pow(1 - k, 4);
+      el.textContent = k < 1 ? m[1] + (end * e).toFixed(dec) + m[3] : final;
+      if (k < 1) requestAnimationFrame(step);
+    })(t0);
+  }
+
+  /* The bar says which sheet is on the desk. */
+  var links = [].slice.call(document.querySelectorAll('.bar ul a'));
+  if ('IntersectionObserver' in window && links.length) {
+    var byId = {};
+    links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+    var ioNav = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var a = byId[e.target.id]; if (!a) return;
+        if (e.isIntersecting) { links.forEach(function (l) { l.removeAttribute('aria-current'); }); a.setAttribute('aria-current', 'true'); }
+        else a.removeAttribute('aria-current');
+      });
+    }, { rootMargin: '-45% 0px -54% 0px' });
+    Object.keys(byId).forEach(function (id) { var el = document.getElementById(id); if (el) ioNav.observe(el); });
+  }
+
+  /* 95 cm at 1 : 1. The rule is 95 CSS centimetres long; the figure reads the
+     height above the ground at the middle of the window. */
+  var rule = document.getElementById('rule95'), cm = document.getElementById('cm');
+  if (rule && cm) {
+    for (var c = 0; c <= 95; c += 5) {
+      var tk = document.createElement('i');
+      tk.className = 'tick' + (c % 10 === 0 ? ' major' : '');
+      tk.style.top = ((95 - c) / 95 * 100) + '%';
+      if (c % 10 === 0 && c > 0) { var lb = document.createElement('span'); lb.textContent = c; tk.appendChild(lb); }
+      rule.appendChild(tk);
+    }
+    var busy = false, shown = 95;
+    var readRule = function () {
+      busy = false;
+      var r = rule.getBoundingClientRect();
+      var h = Math.round(95 * (r.bottom - window.innerHeight * 0.5) / r.height);
+      h = Math.max(0, Math.min(95, h));
+      if (h !== shown) { shown = h; cm.textContent = h; }
+    };
+    var onRule = function () { if (!busy) { busy = true; requestAnimationFrame(readRule); } };
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting) window.addEventListener('scroll', onRule, { passive: true });
+        else window.removeEventListener('scroll', onRule);
+        readRule();
+      }).observe(rule);
+    }
+  }
+
   /* The index: point at a line, its plate comes up in the frame. */
   var index = document.querySelector('.index');
   if (index) {

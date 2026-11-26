@@ -1,0 +1,94 @@
+/* v1, Practice. The register of a working studio: white paper, ink, no colour in
+   the interface. The work supplies the colour; red lives only inside drawings.
+   Archivo for structure, Fraunces for reading. Hovers change tone, nothing else. */
+:root {
+  --paper: #ffffff; --paper-deep: #f4f4f1; --tone: #e2e2de; --tone2: #cfcfca;
+  --ink: #111110; --ink2: #5c5c58; --ink3: #6b6b67;
+  --dark: #111110; --bone: #f4f4f1;
+  --red: #B3341F;
+  --grot: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --serif: 'Fraunces', Georgia, serif;
+  --mono: 'IBM Plex Mono', 'Courier New', monospace;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --m: clamp(1.25rem, 2.4vw, 2.75rem);
+  --t-nav: clamp(1.5rem, 2.5vw, 2.6rem);
+  --t-lead: clamp(1.125rem, 1.5vw, 1.5rem);
+  --t-body: clamp(1.0625rem, 1.15vw, 1.1875rem);
+  --t-small: clamp(0.8125rem, 0.95vw, 0.9375rem);
+  --rhythm: clamp(4rem, 9vw, 8rem);
+}
+html { scroll-behavior: smooth; scroll-padding-top: var(--m); }
+body { font-family: var(--grot); font-size: var(--t-body); line-height: 1.5; color: var(--ink); background: var(--paper); }
+a { text-decoration: none; transition: opacity 160ms var(--ease), color 160ms var(--ease); }
+
+/* the word stack, pinned to the bottom left corner */
+.stack { position: fixed; left: var(--m); bottom: var(--m); z-index: 10; display: flex; flex-direction: column; font-size: var(--t-nav); font-weight: 600; line-height: 1.04; letter-spacing: -0.02em; }
+.stack .brand { text-transform: uppercase; font-weight: 700; letter-spacing: 0.01em; margin-top: 0.5em; }
+@media (hover: hover) { .stack a:hover { opacity: 0.5; } }
+
+/* everything else lives in the right 60% */
+.col { margin-left: 40%; padding: 0 var(--m) var(--rhythm) 0; }
+
+.first { min-height: 100svh; display: flex; flex-direction: column; justify-content: space-between; gap: 3rem; padding: var(--m) 0; }
+.index { counter-reset: n; }
+.index a { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 1.5rem; padding: 0.42em 0; border-bottom: 1px solid var(--tone); }
+.index li:first-child a { padding-top: 0; }
+.index .t { font-size: var(--t-nav); font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; }
+.index .m { font-size: var(--t-small); color: var(--ink3); text-align: right; }
+@media (hover: hover) { .index:hover a { opacity: 0.4; } .index a:hover { opacity: 1; } }
+.who { max-width: 34rem; margin-left: auto; text-align: right; }
+.who h1 { font-size: var(--t-lead); font-weight: 600; letter-spacing: -0.02em; line-height: 1.28; }
+.who p { font-size: var(--t-lead); font-weight: 400; color: var(--ink2); line-height: 1.35; letter-spacing: -0.01em; text-wrap: pretty; }
+
+/* a project, written as a report */
+.project { padding-top: var(--rhythm); }
+.project h2 { font-size: var(--t-nav); font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 1.5rem; }
+.read { font-family: var(--serif); font-weight: 400; line-height: 1.62; }
+.read > p { max-width: 62ch; text-wrap: pretty; }
+.read > p + p, .read > figure + p, .read > div + p { margin-top: 1.1em; }
+.read b { font-weight: 500; font-variant-numeric: tabular-nums; }
+.run { font-family: var(--grot); font-size: 0.8em; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 0.2em; }
+.fig, .plate, .room { margin: 3rem 0; }
+.fig.narrow { max-width: 26rem; }
+.fig > [data-fig='finike'], .fig > [data-fig='notation'] { border: 1px solid var(--tone); padding: 1.25rem; }
+figcaption { font-family: var(--grot); font-size: var(--t-small); color: var(--ink3); margin-top: 0.75rem; line-height: 1.5; max-width: 60ch; }
+.room { background: var(--dark); padding: clamp(1rem, 2vw, 2rem); }
+
+.facts { margin-top: 2.5rem; font-size: var(--t-small); max-width: 62ch; }
+.facts div { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 1rem; padding: 0.3rem 0; }
+.facts dt { color: var(--ink3); }
+.facts a { text-decoration: underline; text-decoration-color: var(--tone2); }
+.facts a:hover { color: var(--ink3); }
+.facts.open { margin-top: 0; font-size: var(--t-body); }
+.tags { margin-top: 1.5rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink3); }
+
+/* instrument, in this version's type */
+.scale-pick { border-top-color: var(--tone); }
+.sc-n { font-size: var(--t-small); }
+.scale-stage figcaption { font-family: var(--serif); font-size: var(--t-body); text-transform: none; letter-spacing: 0; color: var(--ink); }
+
+form { display: grid; max-width: 34rem; margin-top: 1rem; }
+form label { font-size: var(--t-small); color: var(--ink3); margin-top: 1.25rem; }
+form input, form textarea { background: transparent; border: 0; border-bottom: 1px solid var(--ink); border-radius: 0; padding: 0.4rem 0 0.6rem; font-family: var(--serif); font-size: var(--t-lead); resize: vertical; }
+form input:focus-visible, form textarea:focus-visible { outline: 0; box-shadow: 0 1px 0 var(--ink); }
+form [aria-invalid='true'] { border-bottom-color: var(--red); }
+.form-error { font-size: var(--t-small); color: var(--red); margin-top: 1rem; }
+form button { justify-self: start; margin-top: 2rem; font-size: var(--t-lead); font-weight: 600; letter-spacing: -0.02em; border-bottom: 2px solid var(--ink); padding-bottom: 2px; transition: opacity 160ms var(--ease); }
+form button:hover { opacity: 0.5; }
+
+/* this version has no scroll entrances: things are simply there */
+.js [data-rv] { opacity: 1; transform: none; transition: none; }
+
+@media (max-width: 75rem) { .col { margin-left: 30%; } }
+@media (max-width: 60rem) {
+  .stack { position: static; flex-direction: row-reverse; justify-content: space-between; align-items: baseline; padding: var(--m); font-size: 1.125rem; gap: 1rem; }
+  .stack .brand { margin: 0 auto 0 0; }
+  .col { margin-left: 0; padding-left: var(--m); }
+  .first { min-height: calc(100svh - 4rem); padding-top: 1rem; }
+  .who { text-align: left; margin-left: 0; }
+}
+@media (max-width: 34rem) {
+  .index a { grid-template-columns: 1fr; gap: 0.1rem; }
+  .index .m { text-align: left; }
+  .facts div { grid-template-columns: 5.5rem minmax(0, 1fr); }
+}

@@ -1,0 +1,96 @@
+/* The drawing hand and the working parts every version shares.
+   A version supplies: --paper --paper-deep --tone --tone2 --ink --ink2 --ink3
+   --red --dark --bone --mono --ease. Everything typographic stays in its own file. */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+img, svg, canvas { display: block; max-width: 100%; }
+a { color: inherit; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+ul, ol { list-style: none; }
+button, input, textarea { font: inherit; color: inherit; }
+button { background: none; border: 0; cursor: pointer; }
+::selection { background: var(--red); color: var(--paper); }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: absolute; left: 12px; top: -400px; z-index: 99; background: var(--ink); color: var(--paper); padding: 12px 18px; }
+.skip:focus { top: 12px; }
+[hidden] { display: none !important; }
+
+/* ── one entrance ── */
+.js [data-rv] { opacity: 0; transform: translateY(8px); transition: opacity 600ms var(--ease), transform 600ms var(--ease); }
+.js [data-rv].in { opacity: 1; transform: none; }
+
+/* ── drawings: two weights, ink and red, mono notes ── */
+[data-fig] svg { width: 100%; height: auto; overflow: visible; fill: none; stroke: none; }
+[data-fig] .hair { stroke: var(--ink); stroke-width: 0.6; fill: none; }
+[data-fig] .cut { stroke: var(--ink); stroke-width: 1.3; fill: none; }
+[data-fig] .soft { stroke: var(--ink3); }
+[data-fig] .solid { fill: var(--ink); stroke: none; }
+[data-fig] .red.hair, [data-fig] .red.cut, [data-fig] .red .hair, [data-fig] .red .cut { stroke: var(--red); }
+[data-fig] .red .solid { fill: var(--red); }
+[data-fig] text { font-family: var(--mono); font-size: 8px; letter-spacing: 0.06em; fill: var(--ink); stroke: none; }
+[data-fig] .red text { fill: var(--red); }
+[data-fig] text.quiet { fill: var(--ink3); font-size: 7px; }
+/* lines draw on once; notes follow */
+.js [data-fig] .d path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1400ms var(--ease); }
+.js [data-fig].in .d path { stroke-dashoffset: 0; }
+.js [data-fig] .d path:nth-child(2n) { transition-delay: 120ms; }
+.js [data-fig] .d path:nth-child(3n) { transition-delay: 240ms; }
+.js [data-fig] .late { opacity: 0; transition: opacity 600ms var(--ease) 900ms; }
+.js [data-fig].in .late { opacity: 1; }
+figcaption, .cap { font-family: var(--mono); color: var(--ink2); }
+figcaption b, .cap b { color: var(--red); font-weight: inherit; }
+
+/* ── the count table ── */
+[data-fig='counts'] { overflow-x: auto; }
+.counts { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums; }
+.counts th { text-align: right; font-weight: 400; color: var(--ink2); padding: 0 0 8px 12px; border-bottom: 1px solid var(--ink); white-space: nowrap; text-transform: uppercase; letter-spacing: 0.06em; font-size: 11px; }
+.counts td { text-align: right; padding: 7px 0 7px 12px; border-bottom: 1px solid var(--tone); }
+.counts th:nth-child(-n + 3), .counts td:nth-child(-n + 3) { text-align: left; padding-left: 0; padding-right: 12px; }
+.counts .key td { color: var(--ink); border-bottom-color: var(--red); }
+.counts .key b { font-weight: 500; color: var(--red); }
+@media (max-width: 560px) { .counts th:nth-child(2), .counts td:nth-child(2) { display: none; } .counts { font-size: 12px; } }
+
+/* ── the scale instrument ── */
+.scalebox { display: grid; gap: 14px; }
+.scale-pick { border: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--ink); }
+.scale-pick label { cursor: pointer; display: block; }
+.scale-pick input { position: absolute; opacity: 0; }
+.scale-pick label > span { display: block; padding: 10px 0 12px; color: var(--ink3); border-top: 3px solid transparent; margin-top: -1px; transition: color 200ms ease, border-color 200ms ease; }
+.sc-n { display: block; font-weight: 600; font-size: clamp(14px, 1.5vw, 20px); letter-spacing: -0.01em; line-height: 1.1; }
+.sc-r { display: block; font-family: var(--mono); font-size: 11px; margin-top: 4px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.scale-pick input:checked + span { color: var(--ink); border-top-color: var(--red); }
+.scale-pick input:focus-visible + span { outline: 2px solid var(--red); outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) { .scale-pick label:hover > span { color: var(--ink); } }
+.scale-view { position: relative; height: clamp(300px, 52vh, 560px); background: var(--paper-deep); overflow: hidden; }
+.scale-view canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.sbar { position: absolute; right: 16px; bottom: 12px; text-align: right; color: var(--paper); font-family: var(--mono); font-size: 11px; font-variant-numeric: tabular-nums; }
+.sbar-blocks { display: flex; width: 5cm; height: 6px; margin-left: auto; }
+.sbar-blocks i { flex: 1; background: var(--paper); }
+.sbar-blocks i:nth-child(even) { background: var(--red); }
+.sbar p { margin-top: 6px; white-space: nowrap; }
+.scale-stage figcaption { padding-top: 12px; min-height: 3.4em; max-width: 60ch; }
+.scale-stage figcaption a { color: var(--red); }
+@media (max-width: 560px) { .sc-r { display: none; } .sbar-blocks { width: 3cm; } .scale-view { height: 380px; } }
+
+/* ── Tree of Life ── */
+.tree canvas { width: 100%; aspect-ratio: 5 / 4; background: var(--dark); }
+.iter { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 20px; align-items: center; padding-top: 12px; font-family: var(--mono); font-size: 12px; color: var(--bone); }
+.iter label { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.iter p { grid-column: 1 / -1; opacity: 0.7; min-height: 3em; padding-top: 4px; }
+input[type='range'] { -webkit-appearance: none; appearance: none; width: 100%; height: 32px; background: transparent; cursor: ew-resize; display: block; }
+input[type='range']::-webkit-slider-runnable-track { height: 1px; background: currentColor; }
+input[type='range']::-moz-range-track { height: 1px; background: currentColor; }
+input[type='range']::-webkit-slider-thumb { -webkit-appearance: none; width: 3px; height: 22px; margin-top: -11px; background: var(--red); border: 0; border-radius: 0; }
+input[type='range']::-moz-range-thumb { width: 3px; height: 22px; background: var(--red); border: 0; border-radius: 0; }
+
+/* ── photographs, when they exist: whole, in their own colour ── */
+.plate img { width: 100%; height: auto; background: var(--paper-deep); }
+.plate figcaption { padding-top: 8px; font-size: 11px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  .js [data-rv], .js [data-fig] .late { opacity: 1; transform: none; }
+  .js [data-fig] .d path { stroke-dashoffset: 0; }
+}
