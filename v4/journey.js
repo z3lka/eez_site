@@ -14,7 +14,7 @@
   /* extent in metres; fit is the share of the short side it fills */
   var SCENES = [
     { globe: true, zoom: 26 },
-    { m: MODELS.city, extent: 1900, fit: 0.9, n: 10000, az: 38, turn: 26, el: 32, zoom: 7 },
+    { m: MODELS.city, extent: 900, fit: 0.94, n: 10000, zin: 4, az: 38, turn: 26, el: 32, zoom: 7 },
     { m: MODELS.building, extent: 210, fit: 0.82, n: 1000, az: 30, turn: 30, el: 26, zoom: 7 },
     { m: MODELS.room, extent: 12.5, fit: 0.86, n: 50, az: 52, turn: -28, el: 30, zoom: 6 },
     { m: MODELS.object, extent: 1.3, fit: 0.9, n: 5, az: 24, turn: 40, el: 20, zoom: 5, explode: true },
@@ -72,7 +72,9 @@
     var s = SCENES[i], short = Math.min(W, H) * (W < 520 ? 0.88 : 1);
     if (s.globe) return (short * 0.37) / EARTH;
     var fit = (s.fit * short) / s.extent;
-    return s.n ? Math.min(fit, PX_PER_M / s.n) : fit;   /* never larger than the sheet scale */
+    var ppm = s.n ? Math.min(fit, PX_PER_M / s.n) : fit;
+    /* some stops move closer once you have arrived and started reading */
+    return s.zin ? ppm * (1 + (s.zin - 1) * smooth(((us[i] || 0) - 0.03) / 0.1)) : ppm;   /* never larger than the sheet scale */
   }
 
   function fmtScale(n) {

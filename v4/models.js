@@ -22,30 +22,30 @@
   function wallY(m, k, x, y, z, d, h) { line(m, k, [[x, y, z], [x, y + d, z], [x, y + d, z + h], [x, y, z + h], [x, y, z]]); }
   function rng(seed) { return function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }; }
 
-  /* ── City: a street grid around one reclaimed junction (after the
-        Zümrütevler axonometric). About 1.3 km across. ── */
+  /* ── City: Zümrütevler as it stands. Footprints, streets and parks are
+        OpenStreetMap data (city.js). The map records almost no heights here,
+        so floors are estimated from each footprint: small sheds 1 to 2,
+        apartment blocks 4 to 6, large halls 3. Lines are ordered outward
+        from the square, so the drawing grows from it. ── */
   var city = M();
   (function () {
-    var R = rng(95), bw = 62, bd = 46, st = 14, nx = 17, ny = 23, i, j, x, y, h;
-    var ox = -(nx * (bw + st) - st) / 2, oy = -(ny * (bd + st) - st) / 2;
-    for (j = 0; j < ny; j++) for (i = 0; i < nx; i++) {
-      x = ox + i * (bw + st); y = oy + j * (bd + st);
-      if (i === 8 && j === 11) continue;                      /* the square */
-      var parts = R() > 0.45 ? 2 : 1, w = bw / parts, p;
-      for (p = 0; p < parts; p++) {
-        h = 9 + Math.floor(R() * 5) * 3.2;
-        if (R() > 0.3) box(city, 'hair', x + p * w + 1.5, y + 1.5, 0, w - 3, bd - 3, h);
-        else rect(city, 'hair', x + p * w + 1.5, y + 1.5, 0, w - 3, bd - 3);
-      }
-    }
-    var sx = ox + 8 * (bw + st) - st / 2, sy = oy + 11 * (bd + st) - st / 2, sw = bw + st, sd = bd + st;
-    rect(city, 'cut', ox - st, oy - st, 0, nx * (bw + st) + st, ny * (bd + st) + st);
-    rect(city, 'red', sx, sy, 0, sw, sd);
-    for (i = 1; i < 7; i++) line(city, 'red', [[sx + i * sw / 7, sy, 0], [sx + i * sw / 7 - 9, sy + sd, 0]]);
-    [[0.3, 0.3], [0.7, 0.35], [0.5, 0.7], [0.25, 0.75], [0.78, 0.72]].forEach(function (c) { ring(city, 'red', sx + c[0] * sw, sy + c[1] * sd, 0, 3.4, 0, 14); });
-    line(city, 'red', [[sx + sw / 2, sy + sd / 2, 0], [sx + sw / 2, sy + sd / 2, 70]]);
-    city.labels.push({ t: 'the square, 2,000 m²', at: [sx + sw / 2, sy + sd / 2, 70], k: 'red' });
-    city.cz = 10;
+    var D = window.CITY || { b: [], r: [], g: [] }, FL = 3;
+    function poly(a, from, z) { var p = [], i; for (i = from; i < a.length; i += 2) p.push([a[i], a[i + 1], z]); return p; }
+    D.r.forEach(function (r) { line(city, r[0] ? 'cut' : 'hair', poly(r, 1, 0)); });
+    D.g.forEach(function (g) { line(city, 'hair', poly(g, 0, 0)); });
+    D.b.forEach(function (b, n) {
+      var area = b[1], lv = b[0] || (area < 70 ? 1 + n % 2 : area > 650 ? 3 : 4 + (n * 7) % 3), h = lv * FL;
+      var base = poly(b, 2, 0), top = poly(b, 2, h), near = Math.abs(b[2]) < 75 && Math.abs(b[3]) < 75, i, step;
+      if (near) line(city, 'hair', base);
+      line(city, near ? 'cut' : 'hair', top);
+      step = Math.max(1, Math.round((base.length - 1) / (near ? 8 : 4)));
+      for (i = 0; i < base.length - 1; i += step) line(city, 'hair', [base[i], top[i]]);
+    });
+    ring(city, 'red', 0, -4, 0, 13, 0, 24);                  /* about 550 m², the size of the square */
+    ring(city, 'red', 0, -4, 0, 26, 0, 32);
+    line(city, 'red', [[0, -4, 0], [0, -4, 60]]);
+    city.labels.push({ t: 'Zümrütevler Square', at: [0, -4, 60], k: 'red' });
+    city.cz = 8;
   })();
 
   /* ── Building: towers on a plinth with a pedestrian spine (after the
