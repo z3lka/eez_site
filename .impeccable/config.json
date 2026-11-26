@@ -44,6 +44,15 @@
         ],
         "createdAt": "2026-11-26T14:52:32.160Z",
         "reason": "Brand paper #F4F1EA is fixed by the architect's benchmark file and PRODUCT.md; not confirmed by the user in words"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "v4/index.html"
+        ],
+        "createdAt": "2026-11-26T20:39:47.467Z",
+        "reason": "Paper colour taken from the background of Elif's own portfolio deck"
       }
     ]
   }

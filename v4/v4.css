@@ -1,0 +1,117 @@
+/* v4, Scale. The text scrolls on the left; one line drawing stays on the right
+   and zooms from the globe to a pixel. Type and picture size shrink with the
+   scale: each section sets --k, and everything typographic multiplies by it. */
+:root {
+  --paper: #EDEAE3; --paper-deep: #E3DFD6; --tone: #D2CDC1; --tone2: #BFB9AB;
+  --ink: #191813; --ink2: #4A4842; --ink3: #6A665E;
+  --dark: #111110; --bone: #EDEAE3;
+  --red: #B3341F;
+  --grot: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'IBM Plex Mono', 'Courier New', monospace;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --m: clamp(20px, 3.2vw, 48px);
+  --top: 52px;
+  --col: 46vw;
+  --k: 1;
+}
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--top) + 16px); }
+body { font-family: var(--grot); font-size: 17px; line-height: 1.5; color: var(--ink); background: var(--paper); -webkit-font-smoothing: antialiased; }
+a { text-decoration-color: var(--tone2); }
+
+/* ── top bar with the ladder of scales ── */
+.top { position: fixed; inset: 0 0 auto 0; z-index: 30; height: var(--top); display: flex; align-items: center; gap: 24px; padding: 0 var(--m); background: var(--paper); border-bottom: 1px solid var(--ink); font-size: 14px; }
+.top a { text-decoration: none; }
+.brand { font-weight: 700; font-stretch: 112%; text-transform: uppercase; letter-spacing: 0.02em; white-space: nowrap; }
+.ladder { display: flex; gap: clamp(10px, 1.6vw, 26px); margin-left: auto; color: var(--ink3); }
+.ladder a { padding: 6px 0; border-bottom: 2px solid transparent; transition: color 160ms ease, border-color 160ms ease; }
+.ladder a[aria-current] { color: var(--ink); border-bottom-color: var(--red); }
+.write { font-weight: 600; color: var(--red); }
+@media (hover: hover) { .ladder a:hover { color: var(--ink); } }
+
+/* ── the instrument ── */
+.stage { position: fixed; top: var(--top); right: 0; bottom: 0; left: var(--col); z-index: 1; pointer-events: none; border-left: 1px solid var(--tone); }
+.stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hud { position: absolute; left: var(--m); top: clamp(16px, 2.4vw, 32px); }
+.hud-stop { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--red); }
+.hud-n { font-size: clamp(28px, 3.4vw, 52px); font-weight: 600; font-stretch: 88%; letter-spacing: -0.02em; line-height: 1.3; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.hud-scale { display: flex; align-items: center; gap: 10px; margin-top: 10px; font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; }
+.hud-scale i { display: block; height: 7px; width: 96px; border: 1px solid var(--ink); border-top: 0; }
+.hud-place { position: absolute; right: 104px; bottom: 48px; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; text-align: right; }
+
+/* ── the text column ── */
+main { width: var(--col); padding: var(--top) var(--m) 0; position: relative; z-index: 2; }
+.s { padding-bottom: 30vh; }
+.s1 { --k: 1; } .s2 { --k: 0.86; } .s3 { --k: 0.74; } .s4 { --k: 0.64; } .s5 { --k: 0.56; } .s6 { --k: 0.48; }
+
+.hero { min-height: calc(100svh - var(--top)); display: flex; flex-direction: column; justify-content: flex-end; padding: 48px 0 clamp(40px, 7vh, 80px); }
+.kicker { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--red); }
+h1 { font-size: clamp(44px, 6.1vw, 104px); font-weight: 800; font-stretch: 100%; letter-spacing: -0.035em; line-height: 0.94; margin-top: 18px; text-wrap: balance; }
+.lede { font-size: clamp(18px, 1.5vw, 23px); line-height: 1.38; letter-spacing: -0.01em; max-width: 34em; margin-top: 24px; text-wrap: pretty; }
+.hint { font-family: var(--mono); font-size: 12px; color: var(--ink3); margin-top: 28px; }
+.say { border-top: 1px solid var(--ink); padding: 22px 0 14vh; }
+.say p { font-size: clamp(22px, 2.3vw, 36px); font-weight: 500; letter-spacing: -0.025em; line-height: 1.16; text-wrap: balance; max-width: 22em; }
+.places { border-top: 1px solid var(--ink); padding-top: 1px; }
+.places li { min-height: 22vh; padding: 18px 0; display: flex; flex-direction: column; justify-content: center; border-bottom: 1px solid var(--tone); }
+.places b { font-size: clamp(40px, 5.4vw, 92px); font-weight: 800; letter-spacing: -0.035em; line-height: 0.95; }
+.places span { font-size: 15px; color: var(--ink2); margin-top: 8px; }
+
+/* section head: everything below scales with --k */
+.sh { padding-top: 34vh; }
+.sc { font-family: var(--mono); font-size: 13px; color: var(--red); font-variant-numeric: tabular-nums; }
+.sh h2 { font-size: calc(var(--k) * clamp(72px, 11vw, 190px)); font-weight: 800; letter-spacing: -0.045em; line-height: 0.86; margin: 6px 0 0 -0.04em; }
+.sh .lede { font-size: calc(15px + var(--k) * clamp(4px, 0.6vw, 9px)); }
+
+.pj { margin-top: calc(var(--k) * clamp(72px, 10vw, 150px)); padding-top: 14px; border-top: 1px solid var(--ink); font-size: calc(14px + var(--k) * 3px); }
+.pj h3 { font-size: calc(12px + var(--k) * clamp(18px, 2.4vw, 38px)); font-weight: 700; letter-spacing: -0.03em; line-height: 1.02; }
+.meta { font-family: var(--mono); font-size: 12px; line-height: 1.5; color: var(--ink2); margin-top: 10px; max-width: 62ch; }
+.pj > p:not(.meta):not(.src) { max-width: 60ch; margin-top: 1em; text-wrap: pretty; }
+.src { font-size: 13px; color: var(--ink2); margin-top: 16px; max-width: 62ch; }
+
+.fig { margin-top: 20px; }
+.fig img { width: 100%; height: auto; background: var(--paper-deep); }
+.fig.narrow { max-width: 62%; }
+.fig figcaption { font-size: 12px; line-height: 1.4; margin-top: 6px; }
+.g2, .g3 { display: grid; gap: 12px; align-items: start; }
+.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.nums { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 26px; padding-top: 14px; border-top: 1px solid var(--tone); }
+.nums dt { font-size: clamp(30px, 3.2vw, 52px); font-weight: 700; font-stretch: 88%; letter-spacing: -0.03em; line-height: 1; color: var(--red); font-variant-numeric: tabular-nums; }
+.nums dd { font-size: 13px; line-height: 1.35; color: var(--ink2); margin-top: 6px; }
+.facts { margin-top: 20px; font-size: 14px; }
+.facts div { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--tone); }
+.facts dt { color: var(--ink2); }
+.facts dd { font-variant-numeric: tabular-nums; }
+
+/* the last stop is set like a screen: small and mono */
+.s6 .pj, .s6 .pj h3 { font-family: var(--mono); }
+.s6 .pj h3 { font-size: 22px; font-weight: 500; letter-spacing: 0; }
+.contact { margin-top: 30vh; padding-top: 14px; border-top: 1px solid var(--ink); }
+.contact h2 { font-size: clamp(40px, 5.4vw, 92px); font-weight: 800; letter-spacing: -0.035em; line-height: 0.95; }
+.contact a { display: inline-block; margin-top: 16px; font-size: clamp(18px, 1.8vw, 26px); font-weight: 600; color: var(--red); text-decoration-color: currentColor; text-decoration-thickness: 2px; }
+
+.foot { position: relative; z-index: 2; width: var(--col); display: flex; flex-direction: column; gap: 4px; padding: 20px var(--m) 76px; font-size: 13px; color: var(--ink2); }
+
+/* ── phone and tablet: the instrument sits on top, the text scrolls under it ── */
+@media (max-width: 900px) {
+  :root { --col: 100vw; --stage-h: 42svh; }
+  .ladder { display: none; }
+  .write { margin-left: auto; }
+  .stage { left: 0; bottom: auto; height: var(--stage-h); background: var(--paper); border-left: 0; border-bottom: 1px solid var(--ink); z-index: 20; }
+  .hud { left: var(--m); top: 12px; }
+  .hud-n { font-size: 26px; }
+  .hud-scale { margin-top: 4px; }
+  .hud-place { right: 76px; bottom: 34px; font-size: 11px; }
+  main { width: 100%; padding-top: calc(var(--top) + var(--stage-h)); }
+  .hero { min-height: calc(100svh - var(--top) - var(--stage-h)); padding-top: 28px; }
+  .sh { padding-top: 22vh; }
+  .foot { width: 100%; }
+  .nums { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  html { scroll-padding-top: calc(var(--top) + var(--stage-h) + 12px); }
+}
+@media (max-width: 520px) {
+  .g3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .g3 > :last-child { grid-column: 1 / -1; }
+  .fig.narrow { max-width: 100%; }
+  .facts div { grid-template-columns: 7.5rem minmax(0, 1fr); }
+}
