@@ -1,5 +1,5 @@
 /* Version switcher for the comparison. Not part of any design: remove the
-   script tag from the version that wins. Keys 0 to 4 also switch. */
+   script tag from the version that wins. Keys 0 to 5 also switch. */
 (function () {
   'use strict';
   var V = [
@@ -7,7 +7,8 @@
     { k: '1', name: 'Practice', href: '../v1/' },
     { k: '2', name: 'Publication', href: '../v2/' },
     { k: '3', name: '95 cm', href: '../v3/' },
-    { k: '4', name: 'Scale', href: '../v4/' }
+    { k: '4', name: 'Scale', href: '../v4/' },
+    { k: '5', name: 'Blueprint', href: '../v5/' }
   ];
   var here = (/\/v(\d)\//.exec(location.pathname) || [])[1] || '0';
   var nav = document.createElement('nav');

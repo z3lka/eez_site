@@ -53,6 +53,15 @@
         ],
         "createdAt": "2026-11-26T20:39:47.467Z",
         "reason": "Paper colour taken from the background of Elif's own portfolio deck"
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "v5/index.html"
+        ],
+        "createdAt": "2026-11-26T21:14:14.575Z",
+        "reason": "User asked for a blueprint drawing grid as the v5 design language"
       }
     ]
   }
