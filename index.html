@@ -35,31 +35,22 @@
   </nav>
 
   <div class="title">
-    <h1>Elif Ebrar Zelka</h1>
+    <h1>Elif Ebrar Zelka, architect</h1>
     <div class="lede">
-      <p>Architect in Split. A city, a building, a room, an object and a screen are one problem at different magnifications.</p>
+      <p>Based in Split. A city, a building, a room, an object and a screen are one problem at different magnifications.</p>
       <a class="btn" href="#work">See the work</a>
     </div>
   </div>
 
-  <div class="stage">
-    <svg id="scene" viewBox="0 84 1600 624" preserveAspectRatio="xMidYMax slice" role="img"
-      aria-label="A drawing that builds itself: an elevation of a building on the waterfront at Split, set out in pencil, lifted into place storey by storey by a tower crane, rained on with pigment, then resolved into watercolour by a pen."></svg>
-    <noscript><img class="still" src="assets/split-riva-1910.jpg" alt="Split, the Riva, around 1910"></noscript>
+  <div class="stage" id="stage" data-line="assets/hero-line.jpg" data-colour="assets/hero-colour.jpg">
+    <img class="still" src="assets/hero-colour.jpg" width="2000" height="1500" alt="The Peristyle of Diocletian's Palace in Split: a colonnade of arches and a temple front around a paved square, first as a pencil drawing, then in colour">
+    <canvas id="pen" aria-hidden="true"></canvas>
+    <p class="hint" id="hint" aria-hidden="true">Move across the drawing</p>
   </div>
 
   <div class="strip">
-    <button class="btn btn-sm btn-ink" id="replay" type="button">Replay</button>
-    <label class="scrub">
-      <span class="vh">Scrub the drawing from first sketch to finished colour</span>
-      <input id="scrub" type="range" min="0" max="1000" step="1" value="0">
-    </label>
-    <output id="phase" for="scrub">Setting out</output>
-    <dl class="block">
-      <div><dt>Drawing</dt><dd>South elevation</dd></div>
-      <div><dt>Place</dt><dd>Split, Croatia</dd></div>
-      <div><dt>Edition</dt><dd>First, 2026</dd></div>
-    </dl>
+    <button class="btn btn-sm btn-ink" id="replay" type="button">Draw it again</button>
+    <p class="cap">The Peristyle, Split.</p>
   </div>
 </section>
 
@@ -440,7 +431,7 @@
       <li><a href="#top">Back to the drawing</a></li>
     </ul>
   </div>
-  <p class="credits">Pictures: <a href="https://commons.wikimedia.org/wiki/File:Split_Croatia_19th_century.jpg">“Split Croatia 19th century”</a>, <a href="https://creativecommons.org/publicdomain/mark/1.0/">public domain</a>, via Wikimedia Commons; <a href="https://commons.wikimedia.org/w/index.php?curid=74764600">“Theodosian Walls of Constantinople, Istanbul”</a> by Carole Raddato, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>, via Wikimedia Commons; <a href="https://commons.wikimedia.org/w/index.php?curid=152717674">“Finike, Antalya”</a> by Kadı, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, via Wikimedia Commons; <a href="https://commons.wikimedia.org/w/index.php?curid=16967183">“Sulukule1”</a> by Bertramz, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>, via Wikimedia Commons. © 2026 Elif Ebrar Zelka.</p>
+  <p class="credits">Pictures: <a href="https://commons.wikimedia.org/wiki/File:Visitors_walking_through_the_Peristyle_of_Diocletian%E2%80%99s_Palace_in_Split_-_October_2026.jpg">“Visitors walking through the Peristyle of Diocletian’s Palace in Split”</a> by Jazzmaster1997, <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0</a>, via Wikimedia Commons; <a href="https://commons.wikimedia.org/wiki/File:Split_Croatia_19th_century.jpg">“Split Croatia 19th century”</a>, <a href="https://creativecommons.org/publicdomain/mark/1.0/">public domain</a>, via Wikimedia Commons; <a href="https://commons.wikimedia.org/w/index.php?curid=74764600">“Theodosian Walls of Constantinople, Istanbul”</a> by Carole Raddato, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>, via Wikimedia Commons; <a href="https://commons.wikimedia.org/w/index.php?curid=152717674">“Finike, Antalya”</a> by Kadı, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, via Wikimedia Commons; <a href="https://commons.wikimedia.org/w/index.php?curid=16967183">“Sulukule1”</a> by Bertramz, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>, via Wikimedia Commons. © 2026 Elif Ebrar Zelka.</p>
 </footer>
 
 <script src="hero.js"></script>
