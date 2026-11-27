@@ -1,0 +1,19 @@
+/* v7, Pieces. v6 with a line drawing for every project: a piece of it draws
+   itself on the sheet as you scroll, then its picture or film closes over it.
+   Loads after ../v6/v6.css. */
+
+/* each project gets enough scroll for its drawing and then its picture */
+.pj { min-height: 72vh; }
+.s6 .pj { min-height: 56vh; }
+
+/* a photograph prints, then develops into its own colours; a drawing stays a print */
+.frame .orig { filter: none; mix-blend-mode: normal; opacity: 0; transition: opacity 900ms ease; }
+.frame.still.dev:not(.ln) .orig { opacity: 1; }
+.frame.still img { object-fit: contain; }
+.frame.ln .print { filter: grayscale(1) invert(1) brightness(1.9) contrast(1.5); }
+.frame:not(.still) .orig { display: none; }
+
+@media (max-width: 900px) {
+  .pj { min-height: 64svh; }
+  .s6 .pj { min-height: 50svh; }
+}

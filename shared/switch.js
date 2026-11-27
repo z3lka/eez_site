@@ -1,5 +1,5 @@
 /* Version switcher for the comparison. Not part of any design: remove the
-   script tag from the version that wins. Keys 0 to 7 also switch. */
+   script tag from the version that wins. Keys 0 to 8 also switch. */
 (function () {
   'use strict';
   var V = [
@@ -10,10 +10,11 @@
     { k: '4', name: 'Scale', href: '../v4/' },
     { k: '5', name: 'Blueprint', href: '../v5/' },
     { k: '6', name: 'Colours', href: '../v5_colors/' },
-    { k: '7', name: 'Films', href: '../v6/' }
+    { k: '7', name: 'Films', href: '../v6/' },
+    { k: '8', name: 'Pieces', href: '../v7/' }
   ];
   var m = /\/v(\d)(_colors)?\//.exec(location.pathname);
-  var here = m ? (m[2] ? '6' : m[1] === '6' ? '7' : m[1]) : '0';
+  var here = m ? (m[2] ? '6' : m[1] === '6' ? '7' : m[1] === '7' ? '8' : m[1]) : '0';
   var nav = document.createElement('nav');
   nav.setAttribute('aria-label', 'Design versions');
   nav.style.cssText = 'position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:90;display:flex;gap:2px;padding:3px;background:#111110;border-radius:999px;font:500 12px/1 system-ui,sans-serif;box-shadow:0 2px 14px rgba(0,0,0,.22)';
